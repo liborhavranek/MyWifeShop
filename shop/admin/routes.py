@@ -25,6 +25,7 @@ def register():
                     email=user_email,
                     password=hash_password)
         db.session.add(user)
+        db.session.commit()
         flash('Thanks for registering', 'success')
         return redirect(url_for('home'))
     return render_template('admin/register.html', form=form, title="Registration page")
@@ -33,11 +34,13 @@ def register():
 def login():
     form = LoginForm(request.form)
     if request.method == "POST" and form.validate():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(email=request.form["email"]).first()
+        print(user)
+        print(user.password)
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             session['email'] = form.email.data
-            flash(f'Welcome {form.email} You are logedin', 'success')
-            return redirect(request.args.get('next') or url_for('admin'))
+            flash(f'Welcome {request.form["email"]} You are logedin', 'success')
+            return redirect(request.args.get('next') or url_for('home'))
         else:
-            flash('Wrong password try it again','danger')
+            flash('Wrong password try it again', 'danger')
     return render_template('admin/login.html', form=form, title="Login Page")
