@@ -10,3 +10,4 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Nedávat k ostatním importům nahoru, pak to nefunguje a budeš u toho sedět dvě hodiny zase jak debil !!!
 from shop.admin import routes
+from shop.products import routes
