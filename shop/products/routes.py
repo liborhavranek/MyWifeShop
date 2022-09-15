@@ -19,6 +19,21 @@ def addbrand():
 	return render_template('products/addbrand.html', brands='brands')
 
 
+@app.route('/updatebrand/<int:id>', methods=['POST', 'GET'])
+def updatebrand(id):
+	if 'email' not in session:
+		flash('Prvně se prosím přihlašte', 'danger')
+		return redirect(url_for('login'))
+	updatebrand = Brand.query.get_or_404(id)
+	brand = request.form.get('brand')
+	if request.method == "POST":
+		updatebrand.name = brand
+		flash(f'Brand is updated successfully', 'success')
+		db.session.commit()
+		return redirect(url_for('brands'))
+	return render_template('products/updatebrand.html', title="Update brand page", updatebrand=updatebrand)
+
+
 @app.route('/addcat', methods=['GET', 'POST'])
 def addcategory():
 	if 'email' not in session:
@@ -31,8 +46,24 @@ def addcategory():
 		db.session.add(category)
 		flash(f'The category {getcategory} was added to your database', 'success')
 		db.session.commit()
-		return redirect(url_for('addbrand'))
+		return redirect(url_for('addcat'))
 	return render_template('products/addbrand.html')
+
+
+@app.route('/updatecat/<int:id>', methods=['POST', 'GET'])
+def updatecat(id):
+	if 'email' not in session:
+		flash('Prvně se prosím přihlašte', 'danger')
+		return redirect(url_for('login'))
+	updatecat = Category.query.get_or_404(id)
+	category = request.form.get('category')
+	if request.method == "POST":
+		updatecat.name = category
+		flash(f'Category is updated successfully', 'success')
+		db.session.commit()
+		return redirect(url_for('categories'))
+	return render_template('products/updatebrand.html', title="Update category page", updatecat=updatecat)
+
 
 @app.route('/addproduct', methods=['POST', 'GET'])
 def addproduct():
