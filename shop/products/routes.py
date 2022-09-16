@@ -187,3 +187,21 @@ def updateproduct(id):
 	form.description.data = product.description
 	#/////////////////////////////////
 	return render_template('products/updateproduct.html', form=form, brands=brands, categories=categories, product=product)
+
+
+@app.route('/deleteproduct<int:id>', methods=['POST'])
+def deleteproduct(id):
+	product = Addproduct.query.get_or_404(id)
+	if request.method == 'POST':
+		try:
+			os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_1))
+			os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_2))
+			os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_3))
+		except Exception as e:
+			print(e)
+		db.session.delete(product)
+		db.session.commit()
+		flash(f' Produkt {product.name} byl smazán', 'success')
+		return redirect(url_for('admin'))
+	flash(f'Produkt {product.name} nemůže být smazán')
+	return redirect(url_for('admin'))
