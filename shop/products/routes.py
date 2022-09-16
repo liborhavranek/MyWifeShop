@@ -16,7 +16,7 @@ def addbrand():
 		db.session.add(brand)
 		flash(f'The brand {getbrand} was added to your database', 'success')
 		db.session.commit()
-		return redirect(url_for('addbrand'))
+		return redirect(url_for('brands'))
 	return render_template('products/addbrand.html', brands='brands')
 
 
@@ -35,8 +35,21 @@ def updatebrand(id):
 	return render_template('products/updatebrand.html', title="Update brand page", updatebrand=updatebrand)
 
 
+@app.route('/deletebrand/<int:id>', methods=['POST'])
+def deletebrand(id):
+	brand = Brand.query.get_or_404(id)
+	if request.method == 'POST':
+		db.session.delete(brand)
+		db.session.commit()
+		flash(f'The Brand {brand.name} was deleted from the database', 'success')
+		return redirect(url_for('admin'))
+	flash(f'The brand {brand.name} cant be deleted', 'warning')
+	return redirect(url_for('admin'))
+
+
+
 @app.route('/addcat', methods=['GET', 'POST'])
-def addcategory():
+def addcat():
 	if 'email' not in session:
 		flash('Prvně se prosím přihlašte', 'danger')
 		return redirect(url_for('login'))
@@ -47,7 +60,7 @@ def addcategory():
 		db.session.add(category)
 		flash(f'The category {getcategory} was added to your database', 'success')
 		db.session.commit()
-		return redirect(url_for('addcat'))
+		return redirect(url_for('admin'))
 	return render_template('products/addbrand.html')
 
 
@@ -64,6 +77,18 @@ def updatecat(id):
 		db.session.commit()
 		return redirect(url_for('categories'))
 	return render_template('products/updatebrand.html', title="Update category page", updatecat=updatecat)
+
+
+@app.route('/deletecat/<int:id>', methods=['POST'])
+def deletecat(id):
+	category = Category.query.get_or_404(id)
+	if request.method == 'POST':
+		db.session.delete(category)
+		db.session.commit()
+		flash(f'The Brand {category.name} was deleted from the database', 'success')
+		return redirect(url_for('admin'))
+	flash(f'The brand {category.name} cant be deleted', 'warning')
+	return redirect(url_for('admin'))
 
 
 @app.route('/addproduct', methods=['POST', 'GET'])
