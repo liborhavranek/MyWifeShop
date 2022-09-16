@@ -1,7 +1,8 @@
-from flask import redirect, render_template, url_for, flash, request, session
+from flask import redirect, render_template, url_for, flash, request, session, current_app
 from shop import db, app, photos
 from .models import Brand, Category, Addproduct
 from .forms import Addproducts
+import os
 
 
 @app.route('/addbrand', methods=['GET', 'POST'])
@@ -125,6 +126,28 @@ def updateproduct(id):
 		product.colors = form.colors.data
 		product.size = form.size.data
 		product.description = form.description.data
+		if request.files.get("image_1"):
+			try:
+				# prvni radek smaze fotku a druhy nahraje novou
+				os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_1))
+				product.image_1 = photos.save(request.files['image_1'])
+			except:
+				product.image_1 = photos.save(request.files['image_1'])
+
+		if request.files.get("image_2"):
+			try:
+				os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_2))
+				product.image_2 = photos.save(request.files['image_2'])
+			except:
+				product.image_2 = photos.save(request.files['image_2'])
+
+		if request.files.get("image_3"):
+			try:
+				os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image_3))
+				product.image_3 = photos.save(request.files['image_3'])
+			except:
+				product.image_3 = photos.save(request.files['image_3'])
+
 		db.session.commit()
 		flash(f'Your product has been updated', 'success')
 		return redirect('/admin')
