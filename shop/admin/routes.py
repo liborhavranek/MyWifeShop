@@ -7,7 +7,8 @@ from .models import User
 
 @app.route("/")
 def home():
-    return " "
+    products = Addproduct.query.filter(Addproduct.stock > 0)
+    return render_template('products/index.html', products=products)
 
 @app.route('/admin')
 def admin():
