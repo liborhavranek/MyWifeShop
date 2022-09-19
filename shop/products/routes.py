@@ -9,15 +9,24 @@ import os
 def home():
     products = Addproduct.query.filter(Addproduct.stock > 0)
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-    return render_template('products/index.html', products=products, brands=brands)
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('products/index.html', products=products, brands=brands, categories=categories)
 
 
 @app.route('/brand/<int:id>')
 def get_brand(id):
 	brand = Addproduct.query.filter_by(brand_id=id)
 	brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-	return render_template('products/index.html', brand=brand, brands=brands)
+	categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+	return render_template('products/index.html', brand=brand, brands=brands, categories=categories)
 
+
+@app.route('/categories/<int:id>')
+def get_category(id):
+	get_cat_prod = Addproduct.query.filter_by(category_id=id)
+	categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+	brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+	return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories, brands=brands)
 
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():

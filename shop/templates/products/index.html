@@ -29,6 +29,19 @@
               {% endfor %}
           </ul>
         </li>
+
+           <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            All categories
+          </a>
+          <ul class="dropdown-menu">
+              {% for category in categories %}
+            <li><a class="dropdown-item" href="{{ url_for('get_category', id = category.id)}}">{{ category.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </li>
+
+
       </ul>
     </div>
   </div>
@@ -61,6 +74,27 @@
             </div>
         </div>
             {% endfor %}
+
+        {% elif get_cat_prod %}
+            {% for get_cat in get_cat_prod %}
+         <div class="col-md-3 mt-3">
+            <div class="card">
+                <img src="{{url_for('static',filename='images/' + get_cat.image_1)}}" alt="{{ get_cat.name }}" class="card-img-top" height="200">
+                <div class="card-body"></div>
+                {% if get_cat.discount > 0 %}
+                <p class="text-center"> Sleva: {{ get_cat.discount }} %</p>
+                {% endif %}
+                <h5 class="text-center">{{ get_cat.name }}</h5>
+                <p class="text-center">{{ get_cat.price }} Korun</p>
+                <div class="card-footer">
+                    <a herf="#" class="float-left btn btn-sm btn-primary"> Details</a>
+                    <a herf="#" class="float-right btn btn-sm btn-warning">Add to card</a>
+
+                </div>
+            </div>
+        </div>
+            {% endfor %}
+
         {% else %}
             {% for product in products %}
         <div class="col-md-3 mt-3">
