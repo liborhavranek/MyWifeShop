@@ -67,7 +67,7 @@
                 <h5 class="text-center">{{ b.name }}</h5>
                 <p class="text-center">{{ b.price }} Korun</p>
                 <div class="card-footer">
-                    <a herf="#" class="float-left btn btn-sm btn-primary"> Details</a>
+                    <a href="{{url_for('single_page', id=b.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
                     <a herf="#" class="float-right btn btn-sm btn-warning">Add to card</a>
 
                 </div>
@@ -117,7 +117,7 @@
                 <h5 class="text-center">{{ get_cat.name }}</h5>
                 <p class="text-center">{{ get_cat.price }} Korun</p>
                 <div class="card-footer">
-                    <a herf="#" class="float-left btn btn-sm btn-primary"> Details</a>
+                    <a href="{{url_for('single_page', id=get_cat.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
                     <a herf="#" class="float-right btn btn-sm btn-warning">Add to card</a>
 
                 </div>
@@ -166,9 +166,8 @@
                 <h5 class="text-center">{{ product.name }}</h5>
                 <p class="text-center">{{ product.price }} Korun</p>
                 <div class="card-footer">
-                    <a herf="#" class="float-left btn btn-sm btn-primary"> Details</a>
+                    <a href="{{url_for('single_page', id=product.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
                     <a herf="#" class="float-right btn btn-sm btn-warning">Add to card</a>
-
                 </div>
             </div>
         </div>
