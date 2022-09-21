@@ -31,7 +31,13 @@ def AddCart():
 			if 'Shoppingcart' in session:
 				print(session['Shoppingcart'])
 				if product_id in session['Shoppingcart']:
-					print("This product is alredy in cart")
+					# pokud uživatel klikne 2x na přidat do košíku položka se přidá 2x
+					for key, item in session['Shoppingcart'].items():
+						if int(key) == int(product_id):
+							session.modified = True
+							item['quantity'] = int(item["quantity"])
+							item['quantity'] += 1
+
 				else:
 					session['Shoppingcart'] = ManagerDicts(session['Shoppingcart'], DictItem)
 					return redirect(request.referrer)
@@ -89,10 +95,24 @@ def deleteitem(id):
 		for key, item in session['Shoppingcart'].items():
 			if int(key) == id:
 				session['Shoppingcart'].pop(key, None)
+				flash('Položka byla odstraněna', 'success')
 		return redirect(url_for('getCart'))
 	except Exception as e:
 		print(e)
 		return redirect(url_for('getCart'))
+
+
+@app.route('/clearcart')
+def clearcart():
+	try:
+		# Nepoužít session.clear protože by to i odhlásilo uživatele
+		# session.clear()
+		session.pop('Shoppingcart', None)
+		return redirect(url_for('home'))
+	except Exception as e:
+		print(e)
+		return redirect(url_for('home'))
+
 
 @app.route('/empty')
 def empty_cart():
