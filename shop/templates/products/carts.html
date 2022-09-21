@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{{session['Shoppingcart']}}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+            <th>Cislo</th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Discount</th>
+            <th>Subtotal</th>
+            <th>Upravit</th>
+            <th>Smazat</th>
+            </thead>
+            <tbody>
+            {% for key, product in session['Shoppingcart'].items() %}
+            {% set discount ="%0.2f"| format((product.discount/100) * product.price|float) %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.colors }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                {% if product.discount > 0 %}
+                <td>{{ product.discount }} sleva je {{discount}} Kc</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% set subtotal = product.quantity|int * product.price|float %}
+                <td>{{ "%0.2f"|format((subtotal|float) - discount|float) }}</td>
+                <td><a href="">Upravit</a></td>
+                <td><a href="">Odstranit</a></td>
+            </tr>
+            {% endfor %}
+
+            <tr><td colspan="7" align="right"><a href="/">Continue Shopping</a></td> </tr>
+            <tr><td colspan="7" align="right">Cena bez dane: {{subtotal_without_tax}}</td></tr>
+            <tr><td colspan="7" align="right">Dan: {{tax}}</td></tr>
+            <tr><td colspan="7" align="right">Zaplatit: {{grandtotal}}</td></tr>
+
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+{% endblock content %}
