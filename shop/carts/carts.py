@@ -1,6 +1,7 @@
 from flask import render_template, session, request, redirect, url_for, flash, sessions, current_app
 from shop import app, db
 from shop.products.models import Addproduct
+from shop.products.routes import brands, categories
 
 
 def ManagerDicts(dict1, dict2):
@@ -45,8 +46,8 @@ def AddCart():
 
 @app.route('/carts')
 def getCart():
-	if 'Shoppingcart' not in session:
-		return redirect(request.referrer)
+	if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
+		return redirect(url_for('home'))
 	subtotal = 0
 	grandtotal = 0
 	for key, product in session['Shoppingcart'].items():
@@ -56,7 +57,7 @@ def getCart():
 		tax = "%.2f" % (0.21 * float(subtotal))
 		subtotal_without_tax = float(subtotal) - float(tax)
 		grandtotal = float(subtotal)
-	return render_template('products/carts.html', tax=tax, grandtotal=grandtotal, subtotal_without_tax=subtotal_without_tax)
+	return render_template('products/carts.html', tax=tax, grandtotal=grandtotal, subtotal_without_tax=subtotal_without_tax, brands=brands(), categories=categories())
 
 
 @app.route('/updatecart/<int:code>', methods=['POST'])
@@ -79,7 +80,19 @@ def updatecart(code):
 			return redirect(url_for('getCart'))
 
 
-
+@app.route('/deleteitem/<int:id>')
+def deleteitem(id):
+	if 'Shoppingcart' not in session and len(session['Shoppingcart']) <= 0:
+		return redirect(url_for('home'))
+	try:
+		session.modified = True
+		for key, item in session['Shoppingcart'].items():
+			if int(key) == id:
+				session['Shoppingcart'].pop(key, None)
+		return redirect(url_for('getCart'))
+	except Exception as e:
+		print(e)
+		return redirect(url_for('getCart'))
 
 @app.route('/empty')
 def empty_cart():

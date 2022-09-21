@@ -5,10 +5,6 @@ from shop.products.models import Addproduct, Brand, Category
 from .models import User
 
 
-# @app.route("/")
-# def home():
-#     return "You are in homepage"
-
 @app.route('/admin')
 def admin():
     if 'email' not in session:

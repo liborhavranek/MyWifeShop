@@ -4,31 +4,38 @@ from .models import Brand, Category, Addproduct
 from .forms import Addproducts
 import os
 
+
+
+
+def brands():
+	brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+	return brands
+
+
+def categories():
+	categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+	return categories
+
+
 # per page znamená počet caret které chci na stránku zorazit
 @app.route("/")
 def home():
 	page = request.args.get('page', 1, type=int)
 	products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=5)
-	brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-	categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-	return render_template('products/index.html', products=products, brands=brands, categories=categories)
+	return render_template('products/index.html', products=products, brands=brands(), categories=categories())
 
 
 @app.route('/product/<int:id>')
 def single_page(id):
 	product = Addproduct.query.get_or_404(id)
-	brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-	categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-	return render_template('products/single_page.html', product=product, brands=brands, categories=categories)
+	return render_template('products/single_page.html', product=product, brands=brands(), categories=categories())
 
 @app.route('/brand/<int:id>')
 def get_brand(id):
 	page = request.args.get('page', 1, type=int)
 	get_b = Brand.query.filter_by(id=id).first_or_404()
 	brand = Addproduct.query.filter_by(brand=get_b).paginate(page=page, per_page=5)
-	brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-	categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-	return render_template('products/index.html', brand=brand, brands=brands, categories=categories, get_b=get_b)
+	return render_template('products/index.html', brand=brand, brands=brands(), categories=categories(), get_b=get_b)
 
 
 @app.route('/categories/<int:id>')
@@ -36,9 +43,7 @@ def get_category(id):
 	page = request.args.get('page', 1, type=int)
 	get_cat = Category.query.filter_by(id=id).first_or_404()
 	get_cat_prod = Addproduct.query.filter_by(category=get_cat).paginate(page=page, per_page=5)
-	brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-	categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-	return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories, brands=brands, get_cat=get_cat)
+	return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories(), brands=brands(), get_cat=get_cat)
 
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():
