@@ -16,15 +16,16 @@ def AddCart():
 	try:
 		product_id = request.form['product_id']
 		quantity = request.form['quantity']
-		colors = request.form['colors']
+		color = request.form['colors']
 		product = Addproduct.query.filter_by(id=product_id).first()
-		if product_id and quantity and colors and request.method == 'POST':
+		if product_id and quantity and color and request.method == 'POST':
 			DictItem = {product_id:{'name': product.name,
 			                        'price': product.price,
 			                        'discount': product.discount,
-			                        'colors': colors,
+			                        'color': color,
 			                        'quantity': quantity,
-			                        'image': product.image_1}}
+			                        'image': product.image_1,
+			                        'colors': product.colors}}
 
 			if 'Shoppingcart' in session:
 				print(session['Shoppingcart'])
@@ -56,3 +57,34 @@ def getCart():
 		subtotal_without_tax = float(subtotal) - float(tax)
 		grandtotal = float(subtotal)
 	return render_template('products/carts.html', tax=tax, grandtotal=grandtotal, subtotal_without_tax=subtotal_without_tax)
+
+
+@app.route('/updatecart/<int:code>', methods=['POST'])
+def updatecart(code):
+	if 'Shoppingcart' not in session and len(session['Shoppingcart']) <= 0:
+		return redirect(url_for('home'))
+	if request.method == 'POST':
+		quantity = request.form.get('quantity')
+		color = request.form.get('colors')
+		try:
+			session.modified = True
+			for key, item in session['Shoppingcart'].items():
+				if int(key) == code:
+					item["quantity"] = quantity
+					item["color"] = color
+					flash('Item is updatet', 'success')
+					return redirect(url_for('getCart'))
+		except Exception as e:
+			print(e)
+			return redirect(url_for('getCart'))
+
+
+
+
+@app.route('/empty')
+def empty_cart():
+	try:
+		session.clear()
+		return redirect(url_for('home'))
+	except Exception as e:
+		print(e)

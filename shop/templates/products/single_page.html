@@ -70,7 +70,7 @@
           <input type="number" name="quantity" id=" " value="1" min="1" max="{{product.stock}}">
           {% set colors = product.colors.split(',') %}
           <label for="colors">Colors</label>
-          <select name="colors" id="">
+          <select name="colors" id="colors">
             {% for color in colors %}
             {% set col = color.split(':') %}
             <option value="{{col[0]}}">{{col[0] | capitalize}}</option>
