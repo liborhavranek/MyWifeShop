@@ -67,3 +67,10 @@ def login():
         else:
             flash('Wrong password try it again', 'danger')
     return render_template('admin/login.html', form=form, title="Login Page")
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You are logout, success')
+    return redirect(url_for('admin'))
