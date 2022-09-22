@@ -1,5 +1,5 @@
 from flask import redirect, render_template, url_for, flash, request, session, current_app
-from shop import db, app, photos
+from shop import db, app, photos, search
 from .models import Brand, Category, Addproduct
 from .forms import Addproducts
 import os
@@ -245,3 +245,11 @@ def deleteproduct(id):
 		return redirect(url_for('admin'))
 	flash(f'Produkt {product.name} nemůže být smazán')
 	return redirect(url_for('admin'))
+
+
+
+@app.route('/result')
+def result():
+	searchword = request.args.get('q')
+	products = Addproduct.query.msearch(searchword, fields=['name', 'description'], limit=5)
+	return render_template('products/result.html', products=products, brands=brands(), categories=categories())
