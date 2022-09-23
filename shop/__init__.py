@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_uploads import UploadSet, IMAGES, configure_uploads
 from flask_msearch import Search
 from flask_login import LoginManager
+from flask_migrate import Migrate
 import os
 
 basedir = os.path.dirname(__file__)
@@ -20,6 +21,16 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 search =Search()
 search.init_app(app)
+
+#Migrate slouží k rozšíření databáze můžu přidat sloupeček do tabulky nebo ho odebrat
+# dokumentace k tomu je tady https://flask-migrate.readthedocs.io/en/latest/
+# video je 35 video je v něm i rozšíření tabulkz o sloupeček i smazání sloupečku
+migrate = Migrate(app, db)
+with app.app_context():
+	if db.engine.url.drivername == 'sqlite':
+		migrate.init_app(app, db, render_as_batch=True)
+	else:
+		migrate.init_app(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
