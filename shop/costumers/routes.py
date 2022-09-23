@@ -20,6 +20,7 @@ def costumer_register():
 		city = request.form["city"]
 		street = request.form["street"]
 		zipcode = request.form["zipcode"]
+		print()
 		register = Register(username=username,
 		                    email=email,
 		                    contact=contact,
@@ -53,3 +54,10 @@ def costumerLogin():
 		return redirect(url_for('costumerLogin'))
 
 	return render_template('costumer/login.html', form=form)
+
+
+@app.route('/costumer/logout')
+def costumer_logout():
+	logout_user()
+	flash('Uživatel byl úspěšně odhlášen', 'success')
+	return redirect(url_for('home'))

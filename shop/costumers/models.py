@@ -28,7 +28,7 @@ class Register(db.Model, UserMixin):
 
 
 	def __repr__(self):
-		return '<Register %r>' % self.name
+		return '<Register %r>' % self.username
 
 db.create_all()
 
