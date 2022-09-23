@@ -1,14 +1,15 @@
 from flask import redirect, render_template, url_for, flash, request, session, current_app
-from shop import db, app, photos, search, bcrypt
+from flask_login import login_required, current_user, logout_user, login_user
+from shop import db, app, photos, search, bcrypt, login_manager
 from .models import Register
-from .forms import CostumerRegisterForm
+from .forms import CostumerRegisterForm, CostumersLoginForm
 import os
 
 
 @app.route('/costumer/register', methods=['GET', 'POST'])
 def costumer_register():
-	form = CostumerRegisterForm(request.form)
-	if request.method == 'POST':
+	form = CostumerRegisterForm()
+	if form.validate_on_submit():
 		hash_password = bcrypt.generate_password_hash(request.form['password'])
 		username = request.form["username"]
 		email = request.form["email"]
@@ -34,3 +35,21 @@ def costumer_register():
 		flash(f'Welcome {form.username.data} Thanks you for registering', 'success')
 		return redirect(url_for('login'))
 	return render_template('costumer/register.html', form=form)
+
+
+@app.route('/costumer/login', methods=['GET', 'POST'])
+def costumerLogin():
+	form = CostumersLoginForm()
+	if form.validate_on_submit():
+		user = Register.query.filter_by(email=request.form["email"]).first()
+		print(user)
+		print(user.password)
+		if user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user)
+			flash('You are logt in', 'success')
+			next = request.args.get('next')
+			return redirect(next or url_for('home'))
+		flash('Nesprávné přihlašovací údaje', 'danger')
+		return redirect(url_for('costumerLogin'))
+
+	return render_template('costumer/login.html', form=form)
