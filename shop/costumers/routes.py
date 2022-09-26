@@ -1,7 +1,9 @@
+import secrets
+
 from flask import redirect, render_template, url_for, flash, request, session, current_app
 from flask_login import login_required, current_user, logout_user, login_user
 from shop import db, app, photos, search, bcrypt, login_manager
-from .models import Register
+from .models import Register, CostumerOrder
 from .forms import CostumerRegisterForm, CostumersLoginForm
 import os
 
@@ -61,3 +63,50 @@ def costumer_logout():
 	logout_user()
 	flash('Uživatel byl úspěšně odhlášen', 'success')
 	return redirect(url_for('home'))
+
+
+@app.route('/getorder')
+@login_required
+def get_order():
+	if current_user.is_authenticated:
+		costumer_id = current_user.id
+		invoice = secrets.token_hex(5)
+		try:
+			order = CostumerOrder(invoice=invoice, costumer_id=costumer_id, orders=session['Shoppingcart'])
+			db.session.add(order)
+			db.session.commit()
+			session.pop('Shoppingcart')
+			flash('Your order has been send successfully', 'success')
+			return redirect(url_for('orders', invoice=invoice))
+		except Exception as e:
+			print(e)
+			flash('something went wrong while get order', 'danger')
+			return redirect(url_for('getCart'))
+
+@app.route('/orders/<invoice>')
+@login_required
+def orders(invoice):
+	if current_user.is_authenticated:
+		grandTotal = 0
+		subTotal = 0
+		costumer_id = current_user.id
+		costumer = Register.query.filter_by(id=costumer_id).first()
+		orders = CostumerOrder.query.filter_by(costumer_id=costumer_id).order_by(CostumerOrder.id.desc()).first()
+		for key, product in orders.orders.items():
+			discount = (product['discount']/100) * float(product['price'])
+			subTotal = float(product['price']) * int(product['quantity'])
+			subTotal -=discount
+			tax = "%.2f" % (0.21 * float(subTotal))
+			subtotalWithoutTax = float(subTotal) - float(tax)
+			grandTotal = float(subTotal)
+	else:
+		return redirect(url_for('costumerLogin'))
+	return render_template('costumer/order.html',
+		                       invoice=invoice,
+		                       tax=tax,
+		                       subTotal=subTotal,
+		                       subtotalWithoutTax=subtotalWithoutTax,
+		                       grandTotal=grandTotal,
+	                       costumer=costumer,
+	                       orders=orders)
+
