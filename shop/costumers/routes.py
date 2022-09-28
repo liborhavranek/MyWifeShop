@@ -1,11 +1,14 @@
 import secrets
 
-from flask import redirect, render_template, url_for, flash, request, session, current_app
+from flask import redirect, render_template, url_for, flash, request, session, current_app, make_response
 from flask_login import login_required, current_user, logout_user, login_user
 from shop import db, app, photos, search, bcrypt, login_manager
 from .models import Register, CostumerOrder
 from .forms import CostumerRegisterForm, CostumersLoginForm
 import os
+import pdfkit
+from pdfkit.api import configuration
+
 
 
 @app.route('/costumer/register', methods=['GET', 'POST'])
@@ -109,4 +112,42 @@ def orders(invoice):
 		                       grandTotal=grandTotal,
 	                       costumer=costumer,
 	                       orders=orders)
+
+
+@app.route('/get_pdf/<invoice>', methods=['POST'])
+@login_required
+def get_pdf(invoice):
+	if current_user.is_authenticated:
+		grandTotal = 0
+		subTotal = 0
+		costumer_id = current_user.id
+		if request.method == 'POST':
+			costumer = Register.query.filter_by(id=costumer_id).first()
+			orders = CostumerOrder.query.filter_by(costumer_id=costumer_id).order_by(CostumerOrder.id.desc()).first()
+			for key, product in orders.orders.items():
+				discount = (product['discount']/100) * float(product['price'])
+				subTotal = float(product['price']) * int(product['quantity'])
+				subTotal -=discount
+				tax = "%.2f" % (0.21 * float(subTotal))
+				subtotalWithoutTax = float(subTotal) - float(tax)
+				grandTotal = float(subTotal)
+
+			# rendered = render_template('costumer/pdf.html',
+			#                        invoice=invoice,
+			#                        tax=tax,
+			#                        subTotal=subTotal,
+			#                        subtotalWithoutTax=subtotalWithoutTax,
+			#                        grandTotal=grandTotal,
+		    #                    costumer=costumer,
+		    #                    orders=orders)
+
+			rendered = render_template('costumer/pdf.html', invoice=invoice, tax=tax, grandTotal=grandTotal,
+			                           costumer=costumer, orders=orders)
+			config = pdfkit.configuration(wkhtmltopdf=r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+			pdf = pdfkit.from_string(rendered, False, configuration=config)
+			response = make_response(pdf)
+			response.headers['content-Type'] = 'application/pdf'
+			response.headers['content-Disposition'] = 'atteched; filename=' + invoice + '.pdf'
+			return response
+	return request(url_for('orders'))
 
