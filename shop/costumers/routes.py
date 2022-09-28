@@ -7,8 +7,36 @@ from .models import Register, CostumerOrder
 from .forms import CostumerRegisterForm, CostumersLoginForm
 import os
 import pdfkit
-from pdfkit.api import configuration
+import stripe
 
+publishable_key = 'pk_test_51Lmz12HDCsaazuyLq9utr1EyRHBQamOUryYsJxMpkk6ExrHWva8FnaHiqehjhSw3akLCbXgkBlqs7IjcLoVwnTY500rO0OyLqN'
+stripe.api_key =  'sk_test_51Lmz12HDCsaazuyLRrWHvz2MnxC4DKwWzvCW2geOKvzKexkpd6lXnzAh2uqfQMh3cUPMv0IF5C1b29yiXh3FzhFg00zZx524F8'
+
+@app.route('/payment', methods=['POST'])
+@login_required
+def payment():
+	invoice = request.form.get('invoice')
+	amount = request.form.get('amount')
+	print(amount)
+	customer = stripe.Customer.create(
+		email=request.form['stripeEmail'],
+		source=request.form['stripeToken'])
+
+	charge = stripe.Charge.create(
+		customer=customer.id,
+		description='MyWifeShop',
+		amount=amount,
+		currency='czk')
+
+	orders = CostumerOrder.query.filter_by(costumer_id=current_user.id, invoice=invoice).order_by(CostumerOrder.id.desc()).first()
+	orders.status = 'Paid'
+	db.session.commit()
+
+	return redirect(url_for('thanks'))
+
+@app.route('/thanks')
+def thanks():
+	return render_template('costumer/thank.html')
 
 
 @app.route('/costumer/register', methods=['GET', 'POST'])
@@ -67,6 +95,13 @@ def costumer_logout():
 	flash('Uživatel byl úspěšně odhlášen', 'success')
 	return redirect(url_for('home'))
 
+# remove un wanted details from shopping cart
+def updateshoppingcart():
+	for key, product in session['Shoppingcart'].items():
+		session.modified = True
+		del product['image']
+		del product['colors']
+	return updateshoppingcart
 
 @app.route('/getorder')
 @login_required
@@ -74,6 +109,7 @@ def get_order():
 	if current_user.is_authenticated:
 		costumer_id = current_user.id
 		invoice = secrets.token_hex(5)
+		updateshoppingcart()
 		try:
 			order = CostumerOrder(invoice=invoice, costumer_id=costumer_id, orders=session['Shoppingcart'])
 			db.session.add(order)
@@ -100,8 +136,8 @@ def orders(invoice):
 			subTotal = float(product['price']) * int(product['quantity'])
 			subTotal -=discount
 			tax = "%.2f" % (0.21 * float(subTotal))
-			subtotalWithoutTax = float(subTotal) - float(tax)
-			grandTotal = float(subTotal)
+			subtotalWithoutTax =("%.2f" % (float(subTotal) - float(tax)))
+			grandTotal = ("%.2f" % (float(subTotal)))
 	else:
 		return redirect(url_for('costumerLogin'))
 	return render_template('costumer/order.html',
