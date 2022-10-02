@@ -1,0 +1,291 @@
+/* --------------------------navbar start ------------------------------ */
+
+.navbar {
+  padding-bottom: 2% !important;
+  padding-top: 2% !important;
+}
+
+.navbar-nav > li{
+  padding-left:4%;
+  padding-right:4%;
+}
+
+.navbar-brand {
+  padding-left: 5%;
+  font-family: 'Grandstander', cursive;
+  font-size: 2.5rem !important;
+}
+
+.offcanvas-title{
+  padding-left: 5%;
+  font-family: 'Grandstander', cursive;
+  font-size: 2.5rem !important;
+}
+
+.nav-link{
+  font-family: 'Gochi Hand', cursive;
+  font-size: 1.8rem !important;
+}
+
+.nav-link:hover{
+  color: #FA2FD4 !important;
+}
+/* ---------------------------------navbar end ------------------------------------------- */
+/* ----------------------------- logo barvy je to crazy zacatek --------------------------- */
+.span-color-1{
+  color: #6B7CFA;
+}
+
+.span-color-2{
+  color: #29D68B;
+}
+
+.span-color-3{
+  color: #EDED39;
+  }
+
+.span-color-4{
+  color: #D67B29;
+}
+
+.span-color-5{
+  color: #FA2FD4;
+}
+
+
+
+/* ----------------------------- logo barvy je to crazy konec --------------------------- */
+
+/* -----------------------------------carousel start ----------------------------------------- */
+
+.carousel-container{
+  padding-bottom: 5%;
+}
+
+.carousel-text-h{
+  color: #FA2FD4;
+  font-size: 5rem !important;
+  font-family: 'Grandstander', cursive;
+}
+
+.carousel-text-h-chlapci{
+  color: #6B7CFA;
+  font-size: 5rem !important;
+  font-family: 'Grandstander', cursive;
+}
+
+.carousel-text-p-chlapci{
+  color: black;
+  font-size: 3rem !important;
+  font-family: 'Gochi Hand', cursive;
+}
+
+.carousel-text-p{
+  color: #6B7CFA;
+  font-size: 3rem !important;
+  font-family: 'Gochi Hand', cursive;
+}
+
+/* ------------------------------------carousel konec ------------------------- */
+
+/* ------------------------------------card deck start ------------------------------ */
+
+.card-deck-row{
+  padding-top: 4%;
+  background-color: #EFEFEF;
+  padding-bottom: 4%;
+  padding-left: 8%;
+  padding-right: 8%;
+}
+
+.card-body{
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.baby-card{
+  width: 80%;
+}
+
+.boy-card{
+  width: 80%;
+}
+
+.girl-card{
+  width: 80%;
+}
+
+.toy-card{
+  width: 80%;
+}
+
+.shopping-odkaz{
+  text-decoration: none;
+  text-decoration-color: none !important;
+  color: black;
+}
+
+.shopping-odkaz:hover{
+  color:black;
+}
+
+.card-title{
+text-align: center !important;
+font-family: 'Gochi Hand', cursive;
+font-size: 1.5rem;
+}
+
+.card-baby-background{
+  background-color: #29D68B;
+}
+
+.card-boy-background{
+  background-color: #EDED39;
+}
+
+.card-girl-background{
+  background-color: #D67B29;
+}
+
+.card-toys-background{
+  background-color: #6B7CFA;
+}
+
+.title-baby-background{
+  background-color: #D67B29;
+}
+
+.title-boy-background{
+  background-color: #6B7CFA;
+}
+
+.title-girl-background{
+  background-color: #FA2FD4;
+}
+
+.title-toys-background{
+  background-color: #EDED39;
+}
+
+
+.baby-card:hover .card-baby-background{
+  transform: scale(1.1);
+   background-color: #EDED39;
+}
+
+.baby-card:hover .title-baby-background{
+  transform: scale(1.1);
+  background-color: #6B7CFA;
+}
+
+
+.boy-card:hover .card-boy-background{
+  transform: scale(1.1);
+   background-color: #D67B29;
+}
+
+.boy-card:hover .title-boy-background{
+  transform: scale(1.1);
+  background-color: #29D68B;
+}
+
+.girl-card:hover .card-girl-background{
+  transform: scale(1.1);
+   background-color: #FA2FD4;
+}
+
+.girl-card:hover .title-girl-background{
+  transform: scale(1.1);
+  background-color: #D67B29;
+}
+
+
+.toy-card:hover .card-toys-background{
+  transform: scale(1.1);
+   background-color: #29D68B;
+}
+
+.toy-card:hover .title-toys-background{
+  transform: scale(1.1);
+  background-color: #D67B29;
+}
+/* ------------------------------ card deck konec --------------------------- */
+
+/* -------------------------- start best seller section ----------------- */
+
+.nadpis-best-seller{
+  padding-top: 8%;
+  padding-bottom: 4%;
+  text-align: center;
+  font-family: 'Grandstander', cursive;
+  font-size: 3.5rem;
+  color: #FA2FD4;
+
+}
+
+.best-seler-card{
+    margin-left:8%;
+    margin-right:8%;
+}
+
+.card-title-products{
+  text-align: center !important;
+font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.4rem;
+  padding-bottom: 1%;
+}
+
+.product-odkaz{
+  text-decoration: none;
+  text-decoration-color: none;
+  color: #FA2FD4;
+}
+
+.card-title-price{
+  text-align: center !important;
+font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.3rem;
+}
+
+
+.buy-button {
+  width: auto;
+  background-color: #FA2FD4;
+  font-family: 'Grandstander', cursive;
+  font-size: 1.3rem;
+  border: 0px;
+  padding-top: 8%;
+  padding-bottom: 5%;
+  padding-right: 3%;
+}
+
+.buy-button:hover {
+  background: #EDED39;
+}
+
+
+.best-seller{
+  padding-bottom: 7% !important;
+}
+
+.discount{
+text-shadow: 1px 2px 2px #000;
+ color: #f00;
+ transform: rotate(-15deg);
+ position: absolute;
+ top: 23%;
+ left: 25%;
+ font-weight: 600;
+}
+
+.detail-btn {
+  float: right;
+  font-family: 'Grandstander', cursive;
+  font-size: 1.3rem;
+  border: 0px;
+  padding-top: 8%;
+  padding-bottom: 5%;
+  padding-right: 3%;
+  text-align: center;
+}
+/* -------------------------- konec best seller section ----------------- */

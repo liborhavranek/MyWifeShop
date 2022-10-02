@@ -1,65 +1,115 @@
 <!----------------------------- navabar start ------------------------->
 
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">All product</a>
-        </li>
+<!--<nav class="navbar navbar-expand-lg bg-light">-->
+<!--  <div class="container-fluid">-->
+<!--    <a class="navbar-brand" href="#">Navbar</a>-->
+<!--    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--      <span class="navbar-toggler-icon"></span>-->
+<!--    </button>-->
+<!--    <div class="collapse navbar-collapse" id="navbarNavDropdown">-->
+<!--      <ul class="navbar-nav">-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link active" aria-current="page" href="/">All product</a>-->
+<!--        </li>-->
 
- <li class="nav-item">
-          <a class="nav-link" href="{{url_for('getCart')}}">Cart ({{ session['Shoppingcart'] | length }})</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            All brands
-          </a>
-          <ul class="dropdown-menu">
-              {% for brand in brands %}
-            <li><a class="dropdown-item" href="{{ url_for('get_brand', id = brand.id)}}">{{ brand.name }}</a></li>
-              {% endfor %}
-          </ul>
-        </li>
+<!-- <li class="nav-item">-->
+<!--          <a class="nav-link" href="{{url_for('getCart')}}">Cart ({{ session['Shoppingcart'] | length }})</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item dropdown">-->
+<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--            All brands-->
+<!--          </a>-->
+<!--          <ul class="dropdown-menu">-->
+<!--              {% for brand in brands %}-->
+<!--            <li><a class="dropdown-item" href="{{ url_for('get_brand', id = brand.id)}}">{{ brand.name }}</a></li>-->
+<!--              {% endfor %}-->
+<!--          </ul>-->
+<!--        </li>-->
 
-           <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            All categories
-          </a>
-          <ul class="dropdown-menu">
-              {% for category in categories %}
-            <li><a class="dropdown-item" href="{{ url_for('get_category', id = category.id)}}">{{ category.name }}</a></li>
-              {% endfor %}
-          </ul>
-        </li>
-      </ul>
-        <form class="d-flex" role="search" action="{{url_for('result')}}">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+<!--           <li class="nav-item dropdown">-->
+<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--            All categories-->
+<!--          </a>-->
+<!--          <ul class="dropdown-menu">-->
+<!--              {% for category in categories %}-->
+<!--            <li><a class="dropdown-item" href="{{ url_for('get_category', id = category.id)}}">{{ category.name }}</a></li>-->
+<!--              {% endfor %}-->
+<!--          </ul>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--        <form class="d-flex" role="search" action="{{url_for('result')}}">-->
+<!--        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">-->
+<!--        <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--      </form>-->
 
-         <ul class="navbar-nav">
-             {% if current_user.is_authenticated %}
+<!--         <ul class="navbar-nav">-->
+<!--             {% if current_user.is_authenticated %}-->
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{url_for('costumer_logout')}}">Logout({{current_user.username}})</a>
-        </li>
-            {% else %}
-               <li class="nav-item">
-          <a class="nav-link" href="{{url_for('costumer_register')}}">Sign in</a>
-        </li>
-             <li class="nav-item">
-          <a class="nav-link" href="{{url_for('costumerLogin')}}">Login</a>
-        </li>
-             {% endif %}
-         </ul>
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="{{url_for('costumer_logout')}}">Logout({{current_user.username}})</a>-->
+<!--        </li>-->
+<!--            {% else %}-->
+<!--               <li class="nav-item">-->
+<!--          <a class="nav-link" href="{{url_for('costumer_register')}}">Sign in</a>-->
+<!--        </li>-->
+<!--             <li class="nav-item">-->
+<!--          <a class="nav-link" href="{{url_for('costumerLogin')}}">Login</a>-->
+<!--        </li>-->
+<!--             {% endif %}-->
+<!--         </ul>-->
 
-    </div>
-  </div>
-</nav>
+<!--    </div>-->
+<!--  </div>-->
+<!--</nav>-->
 
 <!----------------------------- navabar end ------------------------->
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-light mb-4 fixed-top" id="navbar">
+      <div class="container-fluid nav-container">
+        <a class="navbar-brand text-black" href='/'><span class="span-color-1">D</span><span class="span-color-2">ě</span><span class="span-color-3">t</span><span class="span-color-4">s</span><span class="span-color-5">k</span><span
+            class="span-color-1">é</span> <span class="span-color-2">h</span><span class="span-color-3">ř</span><span class="span-color-4">i</span><span class="span-color-5">š</span><span class="span-color-1">t</span><span
+            class="span-color-2">ě</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarExample-expand-lg" aria-controls="offcanvasNavbarExample-expand-lg">
+          <span class="navbar-toggler-icon" data-bs-target="#offcanvasNavbarExample-expand-lg"></span>
+        </button>
+        <div class="offcanvas offcanvas-start bg-light" data-bs-hideresize="true" tabindex="-1" id="offcanvasNavbarExample-expand-lg" aria-labelledby="offcanvasNavbarExample-expand-lg">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLabel"><span class="span-color-1">D</span><span class="span-color-2">ě</span><span class="span-color-3">t</span><span class="span-color-4">s</span><span class="span-color-5">k</span><span
+                class="span-color-1">é</span> <span class="span-color-2">h</span><span class="span-color-3">ř</span><span class="span-color-4">i</span><span class="span-color-5">š</span><span class="span-color-1">t</span><span
+                class="span-color-2">ě</span></h5>
+            <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body bg-light">
+            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link text-black" href="/homepage">Obchod</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-black" href="index.html">Blog</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Obleceni
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-black" href="#">Hračky</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-black" href="#">Košík</a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </nav>

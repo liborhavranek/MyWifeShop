@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+<div class="container-fluid all-container">
+{% include 'navbar.html' %}
+
+  <div style="padding-top:5em">
+
+      <!-- --------------------------------- carousel sectoion ---------------------------- -->
+      <section class="container mb-4 carousel-container">
+        <div id="carouselExampleCaptions" class="carousel slide carousel-slides" data-bs-ride="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="{{url_for('static',filename='pictures/boys1.jpg')}}" class="d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="carousel-text-h-chlapci">Pro chlapce</h5>
+                <p class=carousel-text-p-chlapci>Nejvyšší kvalita oblečení pro chlapce.</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="{{url_for('static',filename='pictures/baby1.jpg')}}" class="d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="carousel-text-h">Pro nejmenší</h5>
+                <p class=carousel-text-p>Nejvyšší kvalita oblečení pro nejmenší.</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="{{url_for('static',filename='pictures/girl1.jpg')}}" class="d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 class="carousel-text-h">Pro dívky</h5>
+                <p class=carousel-text-p>Nejvyšší kvalita oblečení pro dívky.</p>
+              </div>
+
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+<!--    </div>-->
+</section>
+<!-- ------------------------------------carousel section end------------------------------- -->
+    <!-- ------------------------------------card deck section start------------------------------- -->
+
+<section>
+      <!-- <div class="container card-deck-container"> -->
+      <div class="row row-cols-1 row-cols-md-4 g-4 card-deck-row">
+
+        <div class="col">
+          <a href="#" class="shopping-odkaz">
+            <div class="card baby-card h-100">
+              <img src="{{url_for('static',filename='pictures/baby-card.png')}}" class="card-img-top card-baby-background" alt="...">
+              <div class="card-body title-baby-background">
+                <h5 class="card-title">Pro nejmenší</h5>
+              </div>
+            </div>
+        </a></div>
+        <div class="col">
+          <a href="#" class="shopping-odkaz">
+            <div class="card boy-card h-100">
+              <img src="{{url_for('static',filename='pictures/boy-card-1.png')}}" class="card-img-top card-boy-background" alt="...">
+              <div class="card-body title-boy-background">
+                <h5 class="card-title ">Pro chlapce</h5>
+              </div>
+            </div>
+        </a></div>
+        <div class="col">
+          <a href="#" class="shopping-odkaz">
+            <div class="card girl-card h-100">
+              <img src="{{url_for('static',filename='pictures/ballerina.png')}}" class="card-img-top card-girl-background" alt="...">
+              <div class="card-body title-girl-background">
+                <h5 class="card-title">Pro dívky</h5>
+              </div>
+            </div>
+        </a></div>
+        <div class="col">
+          <a href="#" class="shopping-odkaz">
+            <div class="card toy-card h-100">
+              <img src="{{url_for('static',filename='pictures/teddy-bear-card.png')}}" class="card-img-top card-toys-background" alt="...">
+              <div class="card-body title-toys-background">
+                <h5 class="card-title">Hračky</h5>
+              </div>
+            </div>
+        </a></div>
+      </div>
+    </section>
+    <!-- ------------------------------------card deck section end------------------------------- -->
+
+<section>
+
+    <h1 class="nadpis-best-seller">Nejprodávanější produkty</h1>
+
+ <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 best-seller">
+            {% for product in products.items %}
+        <div class="col-md-3 mt-3">
+            <div class="card h-100 best-seler-card" >
+                <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{ product.name }}" class="card-img-top" height="200">
+                <div class="card-body"></div>
+                {% if product.discount > 0 %}
+                <h5 class="discount" style=> Discount {{product.discount}} %</h5>
+
+<!--                <p class="text-center"> Sleva: {{ product.discount }} %</p>-->
+                {% endif %}
+                <a href="{{url_for('single_page', id=product.id)}}" class="product-odkaz">
+                <h5 class="text-center card-title-products">{{ product.name }}</h5>
+                </a>
+                <p class="text-center card-title-price">{{ product.price }} Korun</p>
+
+                <div class="card-footer">
+                    <a href="{{url_for('single_page', id=product.id)}}" class="detail-btn btn btn-sm btn-primary">Detail</a>
+                    <form action="{{url_for('AddCart')}}" method="post">
+          <input type="hidden" name="product_id" value="{{product.id}}">
+          <button type="submit" class="btn btn-sm btn-warning buy-button">Do košíku</button>
+<!--          <label for="">Pocet kusu</label>-->
+          <input type="hidden" name="quantity" id=" " value="1" min="1" max="{{product.stock}}">
+          {% set colors = product.colors.split(',') %}
+<!--          <label for="colors">Colors</label>-->
+          <select name="colors" id="colors" style="visibility:hidden;">
+            {% for color in colors %}
+            {% set col = color.split(':') %}
+            <option value="{{col[0]}}">{{col[0] | capitalize}}</option>
+            {% endfor %}
+          </select>
+        </form>
+                </div>
+            </div>
+        </div>
+            {% endfor %}
+        </div>
+
+    </section>
+
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+{% endblock content %}
