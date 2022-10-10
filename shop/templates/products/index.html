@@ -3,8 +3,8 @@
 {% include 'navbar.html' %}
 
 
-<div class="container">
-    <div class="row">
+<div class="container" style="padding-top:10em">
+    <div class="row row-cols-1 row-cols-lg-5 row-cols-md-2 g-4 best-seller">
 
 <!--        Tohle se provede pokud chci jen urcitou znacku -->
 
@@ -17,10 +17,12 @@
                 {% if b.discount > 0 %}
                 <p class="text-center"> Sleva: {{ b.discount }} %</p>
                 {% endif %}
-                <h5 class="text-center">{{ b.name }}</h5>
-                <p class="text-center">{{ b.price }} Korun</p>
+                <a href="{{url_for('single_page', id=b.id)}}" class="product-odkaz">
+                <h5 class="text-center card-title-products">{{ b.name }}</h5>
+                </a>
+                <p class="text-center card-title-price">{{ b.price }} Korun</p>
                 <div class="card-footer">
-                    <a href="{{url_for('single_page', id=b.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="{{url_for('single_page', id=b.id)}}" class="float-left btn btn-sm btn-primary product-odkaz">Details</a>
 
                     <form action="{{url_for('AddCart')}}" method="post">
           <input type="hidden" name="product_id" value="{{b.id}}">
@@ -69,18 +71,18 @@
         </div>
     <!--    Toto je stránkování v produktech konec 👆👆👆 -->
 
-     <div class="row">
+     <div class="row row-cols-1 row-cols-lg-5 row-cols-md-2 g-4 best-seller">
         {% elif get_cat_prod %}
             {% for get_cat in get_cat_prod.items %}
 
          <div class="col-md-3 mt-3">
-            <div class="card">
+            <div class="card h-100 best-seler-card">
                 <img src="{{url_for('static',filename='images/' + get_cat.image_1)}}" alt="{{ get_cat.name }}" class="card-img-top" height="200">
                 <div class="card-body"></div>
                 {% if get_cat.discount > 0 %}
                 <p class="text-center"> Sleva: {{ get_cat.discount }} %</p>
                 {% endif %}
-                <h5 class="text-center">{{ get_cat.name }}</h5>
+                <h5 class="text-center card-title-products">{{ get_cat.name }}</h5>
                 <p class="text-center">{{ get_cat.price }} Korun</p>
                 <div class="card-footer">
                     <a href="{{url_for('single_page', id=get_cat.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
@@ -131,7 +133,7 @@
         </div>
     <!--    Toto je stránkování v produktech konec 👆👆👆 -->
 
-    <div class="row">
+    <div class="row row-cols-1 row-cols-lg-5 row-cols-md-2 g-4 best-seller">
         {% else %}
             {% for product in products.items %}
         <div class="col-md-3 mt-3">
@@ -139,15 +141,17 @@
                 <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{ product.name }}" class="card-img-top" height="200">
                 <div class="card-body"></div>
                 {% if product.discount > 0 %}
-                <p class="text-center"> Sleva: {{ product.discount }} %</p>
+<!--                <p class="text-center"> Sleva: {{ product.discount }} %</p>-->
                 {% endif %}
-                <h5 class="text-center">{{ product.name }}</h5>
-                <p class="text-center">{{ product.price }} Korun</p>
+                <a href="{{url_for('single_page', id=product.id)}}" class="product-odkaz">
+                <h5 class="text-center card-title-products">{{ product.name }}</h5>
+                </a>
+                <p class="text-center card-title-price">{{ product.price }} Korun</p>
                 <div class="card-footer">
-                    <a href="{{url_for('single_page', id=product.id)}}" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="{{url_for('single_page', id=product.id)}}" class="detail-btn btn btn-sm btn-primary">Detail</a>
                     <form action="{{url_for('AddCart')}}" method="post">
           <input type="hidden" name="product_id" value="{{product.id}}">
-          <button type="submit" class="btn btn-sm btn-warning">Do kosiku</button>
+          <button type="submit" class="btn btn-sm btn-warning buy-button">Do kosiku</button>
 <!--          <label for="">Pocet kusu</label>-->
           <input type="hidden" name="quantity" id=" " value="1" min="1" max="{{product.stock}}">
           {% set colors = product.colors.split(',') %}

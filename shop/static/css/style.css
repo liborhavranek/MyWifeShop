@@ -6,8 +6,8 @@
 }
 
 .navbar-nav > li{
-  padding-left:4%;
-  padding-right:4%;
+  padding-left:2%;
+  padding-right:2%;
 }
 
 .navbar-brand {
@@ -24,7 +24,7 @@
 
 .nav-link{
   font-family: 'Gochi Hand', cursive;
-  font-size: 1.8rem !important;
+  font-size: 1.4rem !important;
 }
 
 .nav-link:hover{
@@ -252,7 +252,7 @@ font-family: 'Bubblegum Sans', cursive;
   width: auto;
   background-color: #FA2FD4;
   font-family: 'Grandstander', cursive;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   border: 0px;
   padding-top: 8%;
   padding-bottom: 5%;
@@ -266,6 +266,7 @@ font-family: 'Bubblegum Sans', cursive;
 
 .best-seller{
   padding-bottom: 7% !important;
+
 }
 
 .discount{
@@ -281,7 +282,7 @@ text-shadow: 1px 2px 2px #000;
 .detail-btn {
   float: right;
   font-family: 'Grandstander', cursive;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   border: 0px;
   padding-top: 8%;
   padding-bottom: 5%;
@@ -289,3 +290,83 @@ text-shadow: 1px 2px 2px #000;
   text-align: center;
 }
 /* -------------------------- konec best seller section ----------------- */
+
+/* -------------------------- start garance section ----------------- */
+
+.garance-row{
+  background-color: #EFEFEF;
+  padding-left: 8%;
+  padding-right:8%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.feature-box{
+  text-align: center;
+}
+
+.truck-icons{
+  width:20%;
+  padding-bottom: 15%;
+}
+
+.garance-row h3{
+  font-family: 'Grandstander', cursive;
+  font-size: 1.5rem;
+  color: #FA2FD4;
+}
+
+.garance-row p{
+  font-family: 'Grandstander', cursive;
+  font-size: 1rem;
+  color: #6B7CFA;
+}
+
+.warranty-icons{
+  width:40%;
+  padding-bottom: 5%;
+}
+
+.sack-icons{
+  width:22%;
+  padding-bottom: 15%;
+}
+
+/* -------------------------- konec garance section ----------------- */
+
+
+/* ----------------------------------------footer start----------------------------- */
+
+.footer-all{
+  background-color: #FA2FD4;
+}
+
+.footer-nadpis{
+  font-family: 'Grandstander', cursive;
+  font-size: 1.5rem !important;
+}
+
+.footer-all h6{
+  font-family: 'Grandstander', cursive;
+  font-size: 1.5rem !important;
+}
+
+
+
+.footer-all p{
+  font-family: 'Grandstander', cursive;
+  font-size: 1rem;
+}
+
+.footer-all a{
+  text-decoration: none;
+  text-decoration-color: none;
+}
+
+.footer-odkazy{
+  text-align: center;
+  text-decoration: none;
+  text-decoration-color: none;
+}
+
+/* ----------------------------------------footer konec----------------------------- */

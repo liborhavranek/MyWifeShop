@@ -85,29 +85,55 @@
               <li class="nav-item">
                 <a class="nav-link text-black" href="/homepage">Obchod</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link text-black" href="index.html">Blog</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Obleceni
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-black" href="#">Hračky</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-black" href="#">Košík</a>
-              </li>
-            </ul>
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Značky
+          </a>
+          <ul class="dropdown-menu">
+              {% for brand in brands %}
+            <li><a class="dropdown-item text-black" href="{{ url_for('get_brand', id = brand.id)}}">{{ brand.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </li>
+
+
+                           <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Kategorie
+          </a>
+          <ul class="dropdown-menu">
+              {% for category in categories %}
+            <li><a class="dropdown-item text-black" href="{{ url_for('get_category', id = category.id)}}">{{ category.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </li>
+
+
+
+                 <li class="nav-item">
+          <a class="nav-link text-black" href="{{url_for('getCart')}}">Košík ({{ session['Shoppingcart'] | length }})</a>
+        </li>
+
+
+
+                         <ul class="navbar-nav">
+             {% if current_user.is_authenticated %}
+
+        <li class="nav-item">
+            <a class="nav-link text-black" href="{{url_for('costumer_logout')}}">Odhlásit({{current_user.username}})</a>
+        </li>
+            {% else %}
+               <li class="nav-item">
+          <a class="nav-link text-black" href="{{url_for('costumer_register')}}">Registrovat</a>
+        </li>
+             <li class="nav-item">
+          <a class="nav-link text-black" href="{{url_for('costumerLogin')}}">Přihlásit</a>
+        </li>
+             {% endif %}
+         </ul>
+
 
           </div>
         </div>

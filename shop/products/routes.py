@@ -21,14 +21,14 @@ def categories():
 @app.route("/homepage")
 def home():
 	page = request.args.get('page', 1, type=int)
-	products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=5)
+	products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=15)
 	return render_template('products/index.html', products=products, brands=brands(), categories=categories())
 
 
 @app.route("/")
 def home_page():
 	page = request.args.get('page', 1, type=int)
-	products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=4)
+	products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=5)
 	return render_template('products/homepage.html', products=products, brands=brands(), categories=categories())
 
 

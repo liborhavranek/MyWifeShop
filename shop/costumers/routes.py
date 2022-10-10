@@ -53,7 +53,6 @@ def costumer_register():
 		city = request.form["city"]
 		street = request.form["street"]
 		zipcode = request.form["zipcode"]
-		print()
 		register = Register(username=username,
 		                    email=email,
 		                    contact=contact,
@@ -76,8 +75,8 @@ def costumerLogin():
 	form = CostumersLoginForm()
 	if form.validate_on_submit():
 		user = Register.query.filter_by(email=request.form["email"]).first()
-		print(user)
-		print(user.password)
+		# print(user)
+		# print(user.password)
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)
 			flash('You are logt in', 'success')

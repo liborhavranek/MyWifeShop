@@ -96,9 +96,9 @@
 
     <h1 class="nadpis-best-seller">Nejprodávanější produkty</h1>
 
- <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 best-seller">
+ <div class="row row-cols-1 row-cols-lg-5 row-cols-md-2 g-4 best-seller">
             {% for product in products.items %}
-        <div class="col-md-3 mt-3">
+        <div class="col-md-4 mt-3">
             <div class="card h-100 best-seler-card" >
                 <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{ product.name }}" class="card-img-top" height="200">
                 <div class="card-body"></div>
@@ -136,8 +136,90 @@
 
     </section>
 
+
+          <!-- ------------------------------------garance start ---------------------------------- -->
+
+    <section>
+
+
+
+      <div class="row garance-row">
+
+        <div class="feature-box col-sm-4">
+          <img class="truck-icons" src="{{url_for('static',filename='pictures/truck1.png')}}" alt="">
+
+          <h3>Rychlé dodání.</h3>
+
+          <p class="warranty-p">Objednané zboží odesíláme nejpozději druhý den od Vaší objednávky.</p>
+        </div>
+        <div class="feature-box col-sm-4">
+          <img class="warranty-icons" src="{{url_for('static',filename='pictures/quality.png')}}" alt="">
+          <h3>Vysoká kvalita</h3>
+          <p class="warranty-p">Prodáváme zboží, která má tu největší kvalitu</p>
+        </div>
+        <div class="feature-box col-sm-4">
+          <img class="sack-icons" src="{{url_for('static',filename='pictures/sack.png')}}" alt="">
+          <h3>Nízká cena</h3>
+          <p class="warranty-p">Výrobky, které prodáváme mají vysokou kvalitu a nízkou cenu.</p>
+        </div>
+      </div>
+
+    </section>
+    <!-- ------------------------------------garance konec ---------------------------------- -->
+
+        <!-- ---------------------------------------blog zacatek------------------------------------- -->
+
+    <section>
+      <div class="container blog-container">
+        <h1 class="nadpis-best-seller">Náš blog</h1>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+                          <h1 class="nadpis-best-seller text-black">V přípravě</h1>
+
+<!--            <div class="card h-100">-->
+<!--              <img src="images/start-blog.jpg" class="card-img-top" alt="...">-->
+<!--              <div class="card-body">-->
+<!--                <h5 class="card-title card-title-blog">Zahajujeme provoz</h5>-->
+<!--                <p class="card-text card-text-blog">Zahajujeme provoz našeho internetového obchodu s dětským oblečením pro chlapce i dívky a s širokým sortimentem hraček.</p>-->
+<!--                <button type="button" name="button" class="blog-button">Číst víc...</button>-->
+<!--              </div>-->
+
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <div class="card h-100">-->
+<!--              <img src="images/sklad-blog.jpg" class="card-img-top" alt="...">-->
+<!--              <div class="card-body">-->
+<!--                <h5 class="card-title card-title-blog">Naskladňujeme zboží</h5>-->
+<!--                <p class="card-text card-text-blog">Do našeho obchodu dorazilo spoustu nového zboží, které je potřeba naskladnit a prodat koncovým zákazníkům.</p>-->
+<!--                <button type="button" name="button" class="blog-button">Číst víc...</button>-->
+<!--              </div>-->
+
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <div class="card h-100">-->
+<!--              <img src="images/sortiment-blog.jpg" class="card-img-top" alt="...">-->
+<!--              <div class="card-body">-->
+<!--                <h5 class="card-title card-title-blog">Přidáváme sortiment</h5>-->
+<!--                <p class="card-text card-text-blog">Právě dorazilo nové oblečení a hračky s motivem tlapkové patroly, který je u dětí velmi oblíbený. můžete objednávat od nového roku.</p>-->
+<!--                <button type="button" name="button" class="blog-button">Číst víc...</button>-->
+<!--              </div>-->
+
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ---------------------------------------blog konec------------------------------------- -->
+
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
+  </div>
+
 {% endblock content %}
+
+
